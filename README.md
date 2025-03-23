@@ -1,14 +1,16 @@
 # Whisper Transcriber
 
-A lightweight open-source app to transcribe audio using OpenAI's Whisper model. This Python prototype listens for a global hotkey, records audio for a fixed duration, transcribes it, and automatically pastes the transcription into your active text field.
+A lightweight open-source app to transcribe audio using OpenAI's Whisper model. This Python application listens for a customizable hotkey, records audio while the key is held down, transcribes it using Whisper, and automatically pastes the transcription into your active text field.
 
 ## Features
 
-- **Global Hotkey:** Press `Ctrl+Shift+R` to start recording.
+- **Customizable Hotkey:** Choose from predefined hotkeys or set your own custom key.
+- **Press-and-Hold Recording:** Simply hold down your selected hotkey to record, and release to stop recording.
+- **Model Selection:** Choose from any of Whisper's available models (tiny, base, small, medium, large).
+- **Persistent Settings:** Your chosen model and hotkey are remembered between sessions.
 - **Recording Indicator:** A small popup window notifies you when recording is active.
-- **Audio Capture:** Records a 5-second audio clip (configurable) using your microphone.
-- **Whisper Transcription:** Utilizes the Whisper model to convert speech to text.
-- **Auto Paste:** The transcription is copied to the clipboard and automatically pasted.
+- **Auto Paste:** The transcription is copied to the clipboard and automatically pasted into the active application.
+- **Clipboard Fallback:** If automatic pasting fails, the text remains in your clipboard for manual pasting.
 
 ## Prerequisites
 
@@ -44,33 +46,61 @@ A lightweight open-source app to transcribe audio using OpenAI's Whisper model. 
 
 ## Usage
 
-1. **Run the Application:**
+1. **Basic Usage:**
 
    ```bash
    python main.py
    ```
 
-2. **Trigger the Transcription:**
+   Hold down the configured hotkey (default is the Alt/Option key) to record audio. Release the key to stop recording and initiate transcription.
 
-   Press `Ctrl+Shift+R` to start recording. A small popup window will display "Recording..." for 5 seconds (or your configured duration). Once the recording finishes, the audio is transcribed, and the resulting text is automatically copied to your clipboard and pasted into the active text field.
+2. **Command Line Options:**
+
+   ```bash
+   # List all available Whisper models
+   python main.py --list-models
+
+   # Use a specific Whisper model
+   python main.py --model medium
+
+   # List all predefined hotkeys
+   python main.py --list-hotkeys
+
+   # Use a specific predefined hotkey
+   python main.py --hotkey f12
+
+   # Interactively set a custom hotkey
+   python main.py --set-hotkey
+
+   # Enable debug logging
+   python main.py --debug
+   ```
+
+## Whisper Models
+
+The application supports all Whisper models with varying capabilities:
+
+- **tiny**: Very small and fast, basic accuracy
+- **base**: Good balance of speed and accuracy (default)
+- **small**: Better accuracy than base, still reasonably fast
+- **medium**: High accuracy, slower loading
+- **large**: Best accuracy, requires more memory
+
+## Hotkey Options
+
+- Use predefined hotkeys: Alt, Ctrl, Shift, Command, function keys (F11, F12)
+- Set a custom hotkey with the `--set-hotkey` option
 
 ## Configuration
 
-- **Recording Duration:**
-  Change the `DURATION` variable in `main.py` to adjust how long the app records audio.
-
-- **Sample Rate:**
-  The `SAMPLERATE` variable sets the audio sampling rate (default is 16000 Hz).
-
-- **Hotkey:**
-  The hotkey is defined using `keyboard.add_hotkey('ctrl+shift+r', on_hotkey)`. Modify this line if you prefer a different key combination.
+Your settings are automatically saved to `~/.whispertranscriber/config.json` and will persist across sessions.
 
 ## Future Enhancements
 
 - **Improved Error Handling:** Better manage exceptions (e.g., microphone errors or transcription failures).
 - **Enhanced UI:** Refine the popup window with additional information or progress indicators.
-- **Custom User Settings:** Allow customization via a configuration file or settings GUI.
-- **Packaging:** Bundle the application as an executable using PyInstaller or a similar tool for easier distribution.
+- **Custom User Settings:** Add a graphical settings interface.
+- **Packaging:** Bundle the application as an executable for easier distribution.
 
 ## Contributing
 
