@@ -1,0 +1,6 @@
+pynput
+sounddevice
+soundfile
+openai-whisper
+pyperclip
+pyautogui
